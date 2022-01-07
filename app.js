@@ -17,6 +17,7 @@ function GetSuggestions() {
     var searchString = document.getElementById('searchField').value;
     var data;
     var cnt = 1;
+    lastSearchString = searchString;
     if (searchString.length > 0) {
         dropdownContainer.setAttribute("style", "display: block;");
         ReadTextFile("https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/suggest?f=json&text=" + searchString, function (text) {
@@ -92,6 +93,7 @@ var selectedSuggestion;
 searchField.addEventListener("keyup", function (event) {
     if (event.keyCode == 38) {
         //console.log("UP");
+        dropdownContainer.setAttribute("style", "display: block;");
         dropdownIndex--;
         if (dropdownIndex < 0) {
             dropdownIndex = suggestionsLength - 1;
@@ -99,9 +101,16 @@ searchField.addEventListener("keyup", function (event) {
         if (selectedSuggestion != undefined) {
             selectedSuggestion.setAttribute('style', 'background-color: #f1f1f1;');
         }
+        selectedSuggestion = dropdownContainer.getElementsByTagName("a")[dropdownIndex];
+        if (selectedSuggestion != undefined) {
+            selectedSuggestion.setAttribute('style', 'background-color: rgba(0,0,0,0.2);');
+            searchField.value = selectedSuggestion.innerHTML;
+        }
+
     }
     else if (event.keyCode == 40) {
         //console.log("DOWN");
+        dropdownContainer.setAttribute("style", "display: block;");
         dropdownIndex++;
         if (dropdownIndex > suggestionsLength - 1) {
             dropdownIndex = 0;
@@ -109,14 +118,13 @@ searchField.addEventListener("keyup", function (event) {
         if (selectedSuggestion != undefined) {
             selectedSuggestion.setAttribute('style', 'background-color: #f1f1f1;');
         }
+        selectedSuggestion = dropdownContainer.getElementsByTagName("a")[dropdownIndex];
+        if (selectedSuggestion != undefined) {
+            selectedSuggestion.setAttribute('style', 'background-color: rgba(0,0,0,0.2);');
+            searchField.value = selectedSuggestion.innerHTML;
+        }
+
     }
-    //console.log(dropdownIndex);
-    selectedSuggestion = dropdownContainer.getElementsByTagName("a")[dropdownIndex];
-    if (selectedSuggestion != undefined) {
-        selectedSuggestion.setAttribute('style', 'background-color: rgba(0,0,0,0.2);');
-        searchField.value = selectedSuggestion.innerHTML;
-    }
-    //console.log(selectedSuggestion.innerHTML);
 });
 
 searchField.addEventListener("click", function (event) {
@@ -128,10 +136,11 @@ body.addEventListener("keyup", function (event) {
     //console.log(event.keyCode);
     if (event.keyCode == 27) {
         dropdownContainer.setAttribute("style", "");
+        searchField.value = lastSearchString;
     }
 });
 
-var defaultSearchString = searchField.text;
+var lastSearchString = searchField.text;
 var dropdownContainer = document.getElementById('dropdownContainer');
 
 dropdownContainer.addEventListener("click", function (event) {
@@ -159,6 +168,7 @@ document.addEventListener("click", function (event) {
     //console.log(clicked);
     if (clicked != "searchField") {
         dropdownContainer.setAttribute("style", "");
+        searchField.value = lastSearchString;
     };
 
 });
