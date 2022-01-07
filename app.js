@@ -37,6 +37,7 @@ function GetSuggestions() {
         });
     } else {
         dropdownContainer.setAttribute("style", "");
+        container.innerHTML = "";
     }
 }
 
@@ -112,7 +113,7 @@ searchField.addEventListener("keyup", function (event) {
     //console.log(dropdownIndex);
     selectedSuggestion = dropdownContainer.getElementsByTagName("a")[dropdownIndex];
     if (selectedSuggestion != undefined) {
-        selectedSuggestion.setAttribute('style', 'background-color: coral;');
+        selectedSuggestion.setAttribute('style', 'background-color: rgba(0,0,0,0.2);');
         searchField.value = selectedSuggestion.innerHTML;
     }
     //console.log(selectedSuggestion.innerHTML);
@@ -148,7 +149,7 @@ dropdownContainer.addEventListener("mousemove", function (event) {
     var id = event.path[0].id - 1;
     dropdownIndex = id;
     selectedSuggestion = dropdownContainer.getElementsByTagName("a")[id];
-    selectedSuggestion.setAttribute('style', 'background-color: coral;');
+    selectedSuggestion.setAttribute('style', 'background-color: rgba(0,0,0,0.2);');
     //console.log(id);
     //console.log(event.path[0].innerHTML);
 });
