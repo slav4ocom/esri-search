@@ -12,7 +12,7 @@
 
 <body>
     <div class="dropdown">
-        <span><input id="searchField" type="text" oninput="Suggest()"></span>
+        <span><input id="searchField" type="text" oninput="GetSuggestions()"></span>
         <span>
             <img id="magnifier" src="/magnifier.jpg" height="25"
                 onclick="Search(document.getElementById('searchField').value)" />
@@ -34,7 +34,6 @@
 
         </tbody>
     </table>
-
 </body>
 
 </html>
