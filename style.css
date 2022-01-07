@@ -14,7 +14,9 @@ table {
     color: blue;
   }
 
-  
+.hand:hover {
+  cursor: pointer;
+}
 
   /* Dropdown Button */
 .dropbtn {
