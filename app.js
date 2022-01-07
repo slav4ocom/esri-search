@@ -19,14 +19,14 @@ function GetSuggestions() {
     var cnt = 1;
     ReadTextFile("https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/suggest?f=json&text=" + searchString, function (text) {
         data = JSON.parse(text);
-        //console.log("dropdown content:");
+
         suggestionsLength = data.suggestions.length;
-        //const suggestions = ["Горна Оряховица", "Бов", "Казичене", "Синдел"];
+
         var suggestions = data.suggestions;
         container.innerHTML = "";
         suggestions.forEach(element => {
             var suggestion = document.createElement('a');
-            suggestion.setAttribute('id', "sug" + cnt);
+            suggestion.setAttribute('id', cnt);
             cnt++;
             suggestion.innerHTML = element.text;
             container.appendChild(suggestion);
@@ -65,11 +65,11 @@ function Search(searchString) {
 
 }
 
-function SearchFromSuggestion(e) {
-
-    console.log("search from suggestion");
-    console.log(e);
-}
+//function SearchFromSuggestion(e) {
+//
+//    console.log("search from suggestion");
+//    console.log(e);
+//}
 
 // Get the input field
 var searchField = document.getElementById("searchField");
@@ -129,3 +129,14 @@ dropdownContainer.addEventListener("click", function (event) {
     Search(pointed);
 });
 
+dropdownContainer.addEventListener("mouseover", function (event) {
+    if (selectedSuggestion != undefined) {
+        selectedSuggestion.setAttribute('style', 'background-color: #f1f1f1;');
+    }
+    var id = event.path[0].id - 1;
+    dropdownIndex = id;
+    selectedSuggestion = dropdownContainer.getElementsByTagName("a")[id];
+    selectedSuggestion.setAttribute('style', 'background-color: coral;');
+    console.log(id);
+    console.log(event.path[0].innerHTML);
+});
