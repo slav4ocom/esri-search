@@ -31,6 +31,7 @@ function GetSuggestions() {
             suggestion.innerHTML = element.text;
             container.appendChild(suggestion);
             //console.log(element);
+            dropdownIndex = -1;
         });
     });
 }
@@ -65,11 +66,6 @@ function Search(searchString) {
 
 }
 
-//function SearchFromSuggestion(e) {
-//
-//    console.log("search from suggestion");
-//    console.log(e);
-//}
 
 // Get the input field
 var searchField = document.getElementById("searchField");
@@ -129,7 +125,7 @@ dropdownContainer.addEventListener("click", function (event) {
     Search(pointed);
 });
 
-dropdownContainer.addEventListener("mouseover", function (event) {
+dropdownContainer.addEventListener("mousemove", function (event) {
     if (selectedSuggestion != undefined) {
         selectedSuggestion.setAttribute('style', 'background-color: #f1f1f1;');
     }
