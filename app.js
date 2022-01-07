@@ -4,8 +4,6 @@ var dropdownIndex = -1;
 var selectedSuggestion;
 var lastSearchString = "";
 var dropdownContainer = document.getElementById('dropdownContainer');
-//var body = document.getElementById("body");
-
 
 function ReadTextFile(file, callback) {
     var rawFile = new XMLHttpRequest();
