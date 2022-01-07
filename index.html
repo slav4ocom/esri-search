@@ -14,24 +14,14 @@
     <div class="dropdown">
         <span><input id="searchField" type="text" oninput="Suggest()"></span>
         <span>
-            <img id="magnifier" src="/magnifier.jpg" height="25" onclick="Search()" />
+            <img id="magnifier" src="/magnifier.jpg" height="25"
+                onclick="Search(document.getElementById('searchField').value)" />
         </span>
         <div id="dropdownContainer" class="dropdown-content">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
+
         </div>
     </div>
 
-
-    <!--<div class="dropdown">
-        <input id="searchField" type="text" class="dropbtn" />
-        <div class="dropdown-content" id="dropdownContainer">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
-        </div>
-    </div>-->
     <table>
 
         <head>

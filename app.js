@@ -10,15 +10,6 @@ function ReadTextFile(file, callback) {
     rawFile.send(null);
 }
 
-function Suggest() {
-    var searchString = document.getElementById('searchField').value;
-    ReadTextFile("https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/suggest?f=json&text=" + searchString, function (text) {
-        var data = JSON.parse(text);
-        console.log(data);
-    })
-}
-
-
 
 function Suggest() {
     var container = document.getElementById('dropdownContainer');
@@ -26,8 +17,8 @@ function Suggest() {
     var data;
     ReadTextFile("https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/suggest?f=json&text=" + searchString, function (text) {
         data = JSON.parse(text);
-        console.log("dropdown content:");
-        console.log(data);
+        //console.log("dropdown content:");
+        //console.log(data);
         //const suggestions = ["Горна Оряховица", "Бов", "Казичене", "Синдел"];
         var suggestions = data.suggestions;
         container.innerHTML = "";
@@ -35,17 +26,16 @@ function Suggest() {
             var suggestion = document.createElement('a');
             suggestion.innerHTML = element.text;
             container.appendChild(suggestion);
-            console.log(element);
+            //console.log(element);
         });
     });
 }
 
-//AddDropdownContent(document.getElementById('dropdownContainer'));
 
-function Search() {
+function Search(searchString) {
     var container = document.getElementById('resultsContainer');
     container.innerHTML = "";
-    var searchString = document.getElementById('searchField').value;
+    //var searchString = document.getElementById('searchField').value;
     ReadTextFile("https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=" + searchString + "&f=json", function (text) {
         var data = JSON.parse(text).candidates;
         var myTable = document.getElementById('resultsContainer');
@@ -71,6 +61,12 @@ function Search() {
 
 }
 
+function SearchFromSuggestion(e) {
+
+    console.log("search from suggestion");
+    console.log(e);
+}
+
 // Get the input field
 var input = document.getElementById("searchField");
 
@@ -85,4 +81,12 @@ input.addEventListener("keyup", function (event) {
     }
 });
 
-//AddDropdownButton(document.getElementById('suggestionsButton'), "suggestions");
+var suggestionInput = document.getElementById('dropdownContainer');
+
+suggestionInput = document.getElementById('dropdownContainer');
+
+suggestionInput.addEventListener("click", function (event) {
+    console.log(event.srcElement.innerText);
+    Search(event.srcElement.innerText);
+});
+
