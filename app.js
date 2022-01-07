@@ -17,23 +17,27 @@ function GetSuggestions() {
     var searchString = document.getElementById('searchField').value;
     var data;
     var cnt = 1;
-    ReadTextFile("https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/suggest?f=json&text=" + searchString, function (text) {
-        data = JSON.parse(text);
+    if (searchString.length > 0) {
+        dropdownContainer.setAttribute("style", "display: block;");
+        ReadTextFile("https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/suggest?f=json&text=" + searchString, function (text) {
+            data = JSON.parse(text);
+            suggestionsLength = data.suggestions.length;
 
-        suggestionsLength = data.suggestions.length;
-
-        var suggestions = data.suggestions;
-        container.innerHTML = "";
-        suggestions.forEach(element => {
-            var suggestion = document.createElement('a');
-            suggestion.setAttribute('id', cnt);
-            cnt++;
-            suggestion.innerHTML = element.text;
-            container.appendChild(suggestion);
-            //console.log(element);
-            dropdownIndex = -1;
+            var suggestions = data.suggestions;
+            container.innerHTML = "";
+            suggestions.forEach(element => {
+                var suggestion = document.createElement('a');
+                suggestion.setAttribute('id', cnt);
+                cnt++;
+                suggestion.innerHTML = element.text;
+                container.appendChild(suggestion);
+                //console.log(element);
+                dropdownIndex = -1;
+            });
         });
-    });
+    } else {
+        dropdownContainer.setAttribute("style", "");
+    }
 }
 
 
@@ -45,7 +49,7 @@ function Search(searchString) {
         var data = JSON.parse(text).candidates;
         var myTable = document.getElementById('resultsContainer');
         var id = 1;
-        console.log(data);
+        //console.log(data);
         data.forEach(element => {
             var tableRow = document.createElement('tr');
             var tableCol1 = document.createElement('td');
@@ -114,6 +118,18 @@ searchField.addEventListener("keyup", function (event) {
     //console.log(selectedSuggestion.innerHTML);
 });
 
+searchField.addEventListener("click", function (event) {
+    dropdownContainer.setAttribute("style", "display: block;");
+});
+
+var body = document.getElementById("body");
+body.addEventListener("keyup", function (event) {
+    //console.log(event.keyCode);
+    if (event.keyCode == 27) {
+        dropdownContainer.setAttribute("style", "");
+    }
+});
+
 var defaultSearchString = searchField.text;
 var dropdownContainer = document.getElementById('dropdownContainer');
 
@@ -133,6 +149,15 @@ dropdownContainer.addEventListener("mousemove", function (event) {
     dropdownIndex = id;
     selectedSuggestion = dropdownContainer.getElementsByTagName("a")[id];
     selectedSuggestion.setAttribute('style', 'background-color: coral;');
-    console.log(id);
-    console.log(event.path[0].innerHTML);
+    //console.log(id);
+    //console.log(event.path[0].innerHTML);
+});
+
+document.addEventListener("click", function (event) {
+    var clicked = event.path[0].id;
+    //console.log(clicked);
+    if (clicked != "searchField") {
+        dropdownContainer.setAttribute("style", "");
+    };
+
 });
