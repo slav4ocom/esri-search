@@ -146,14 +146,14 @@ function AddListeners() {
         if (selectedSuggestion != undefined) {
             selectedSuggestion.setAttribute('style', 'background-color: #f1f1f1;');
         }
-        var id = event.path[0].id - 1;
+        var id = event.srcElement.id - 1;
         dropdownIndex = id;
         selectedSuggestion = dropdownContainer.getElementsByTagName("a")[id];
         selectedSuggestion.setAttribute('style', 'background-color: rgba(0,0,0,0.2);');
     });
 
     document.addEventListener("click", function (event) {
-        var clicked = event.path[0].id;
+        var clicked = event.srcElement.id;
         if (clicked != "searchField") {
             dropdownContainer.setAttribute("style", "");
             searchField.value = lastSearchString;
